@@ -13,7 +13,7 @@ function onFormSubmit(evt) {
 
   let delay = Number(delayInputRef.value);
 
-  for (let index = 1; index <= amountInputRef.value; index++) {
+  for (let index = 1; index <= Number(amountInputRef.value); index++) {
     delay += Number(stepInputRef.value);
     console.log(delay);
     createPromise(index, delay)
