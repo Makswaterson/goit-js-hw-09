@@ -13,7 +13,7 @@ function onFormSubmit(evt) {
 
   let delay = Number(delayInputRef.value);
 
-  for (let index = 1; index <= amountInputRef.value.length; index++) {
+  for (let index = 1; index <= amountInputRef.value; index++) {
     delay += Number(stepInputRef.value);
     console.log(delay);
     createPromise(index, delay)
@@ -29,10 +29,12 @@ function onFormSubmit(evt) {
 function createPromise(position, delay) {
   return new Promise((resolve, reject) => {
     const shouldResolve = Math.random() > 0.3;
-    if (shouldResolve) {
-      resolve({ position, delay });
-    } else {
-      reject({ position, delay });
-    }
+    setTimeout(() => {
+      if (shouldResolve) {
+        resolve({ position, delay });
+      } else {
+        reject({ position, delay });
+      }
+    }, delay);
   });
 }
