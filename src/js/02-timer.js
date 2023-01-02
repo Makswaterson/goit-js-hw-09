@@ -107,8 +107,9 @@ const options = {
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
-  onClose(selectedDates) {
-    TIMER_DEADLINE = selectedDates[0];
+  onClose([selectedDates]) {
+    TIMER_DEADLINE = selectedDates;
+    console.log(selectedDates);
     if (selectedDates[0] <= Date.now()) {
       startBtnRef.setAttribute('disabled', 'disabled');
       Notify.failure('Please choose a date in the future', notifyOptions);
@@ -128,9 +129,7 @@ const timer = {
     this.intervalId = setInterval(() => {
       const delta = deadline.getTime() - Date.now();
       const data = this.convertMs(delta);
-      Object.entries(data).forEach(([name, value]) => {
-        this.refs[name].textContent = this.addLeadingZero(value);
-      });
+      this.makeElemetsValue(data);
       if (delta <= 1000) {
         clearInterval(this.intervalId);
         Notify.success('The timer has passed!'), notifyOptions;
@@ -169,6 +168,11 @@ const timer = {
   },
   addLeadingZero(value) {
     return String(value).padStart(2, '0');
+  },
+  makeElemetsValue(data) {
+    Object.entries(data).forEach(([name, value]) => {
+      this.refs[name].textContent = this.addLeadingZero(value);
+    });
   },
 };
 
